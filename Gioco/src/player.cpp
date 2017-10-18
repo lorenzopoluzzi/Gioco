@@ -2,7 +2,7 @@
  * player.c
  *
  *  Created on: 18 ott 2017
- *      Author: turri
+ *      Author: Omar Serrah
  */
 
 #include "player.h"
