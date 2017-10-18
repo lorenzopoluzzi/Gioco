@@ -37,15 +37,15 @@ int aggiungiVicino(char  mappa[ALTEZZA][LARGHEZZA], Lista<coordinate> * frontier
 		vieneDa[y][x + 1].x = x;
 	}
 
-	    // west
-	    if (x > 0 && vieneDa[y][x - 1].y < 0 && controlloPos(mappa, y, x - 1)){
-	    	coord.x = x - 1;
-			coord.y = y;
-			frontiere = insertCoda(coord, frontiere);
-			count++;
-			vieneDa[y][x - 1].y = y;
-			vieneDa[y][x - 1].x = x;
-	    }
+	// west
+	if (x > 0 && vieneDa[y][x - 1].y < 0 && controlloPos(mappa, y, x - 1)){
+		coord.x = x - 1;
+		coord.y = y;
+		frontiere = insertCoda(coord, frontiere);
+		count++;
+		vieneDa[y][x - 1].y = y;
+		vieneDa[y][x - 1].x = x;
+	}
 
 	    return count;
 }

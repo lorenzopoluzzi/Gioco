@@ -93,8 +93,8 @@ void livello::collegamentiPorte(){
 				collegamento = false;
 				while(count < 2 && !collegamento){
 					randomRoom = rand() % this->numStanze;
-					randomDoor = rand() % s.getNumPorte();
 					Stanza random = getElemetI(randomRoom,this->stanze);
+					randomDoor = rand() % random.getNumPorte();
 					porta porte2[4];
 					random.getPorte(porte2);
 					if(!porte2[randomDoor].conect && randomRoom != i){
