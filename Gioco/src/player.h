@@ -2,7 +2,7 @@
  * player.h
  *
  *  Created on: 18 ott 2017
- *      Author: turri
+ *      Author: Omar Serrah
  */
 
 #ifndef PLAYER_H_
@@ -55,7 +55,7 @@ public:
 
 protected:
 
-    //propriet‡ del giocatore principale
+    //propriet√† del giocatore principale
     int _livello;
     int _esperienza;
     int _attacco;
