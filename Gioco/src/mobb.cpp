@@ -28,6 +28,7 @@ mostro::mostro (int liv, int x, int y) {
 
             this->atck = 10 + (liv*2);
             this->life = 25 + (liv*5);
+            this->vista = 3;
 
 
         }
@@ -36,6 +37,7 @@ mostro::mostro (int liv, int x, int y) {
 
             this->atck = 15 + (liv*2);
             this->life = 35 + (liv*5);
+            this->vista = 4;
 
         }
 
@@ -43,6 +45,7 @@ mostro::mostro (int liv, int x, int y) {
 
             this->atck = 25 + (liv*2);
             this->life = 50 + (liv*5);
+            this->vista = 5;
 
         }
 
@@ -121,6 +124,14 @@ int mostro::getposy () {
     return (this->y);
 }
 
+bool mostro::getVivo(){
+	return(this->vivo);
+}
+
+int mostro::getVista(){
+	return(this->vista);
+}
+
 void mostro::stampamobb (char mappa[45][135]) {
 
     if (tipomobb == 0) {
@@ -137,19 +148,74 @@ void mostro::stampamobb (char mappa[45][135]) {
 
     }
 }
+void mostro::cancellaMobb( char mappa [45][135]){
+	mappa[y][x] = ' ';
+}
 
-void mostro::movemobb (bool moodmobb)  {
-
+void mostro::movemobb (bool moodmobb, bool sopra, bool sotto, bool destra, bool sinistra )  {
+	int x,y;
+	//activemobb move si muove segue il player
     if (moodmobb == true ) {
+    	if(sopra){
+    		x = this->x;
+			y = this->y-1;
+			this->setpos(x,y);
 
-       // activemobb();
+    	}else if(sotto){
+    		x = this->x;
+			y = this->y+1;
+			this->setpos(x,y);
+    	}else if(destra){
+    		x = this->x+1;
+			y = this->y;
+			this->setpos(x,y);
+    	}else if(sinistra){
+    		x = this->x-1;
+			y = this->y;
+			this->setpos(x,y);
+    	}
+
     }
-
+    //passivemobb move si muove in modo random
     else {
-    	//passivemobb();
+    	bool isMove = false;
+    	int random;
+    	while(!isMove){
+    		random = rand()%4;
+    		//move top
+    		if(random == 0 && sopra){
+    			x = this->x;
+    			y = this->y-1;
+    			this->setpos(x,y);
+    			isMove = true;
+    		}
+    		//move bottom
+    		else if(random == 1 && sotto){
+    			x = this->x;
+				y = this->y+1;
+				this->setpos(x,y);
+				isMove = true;
+    		}
+    		//move right
+    		else if(random == 2 && destra){
+    			x = this->x+1;
+				y = this->y;
+				this->setpos(x,y);
+				isMove = true;
+    		}
+    		//move left
+    		else if(random == 3 && sinistra){
+    			x = this->x-1;
+				y = this->y;
+				this->setpos(x,y);
+				isMove = true;
+    		}
+    	}
+
     };
 
 
 }
+
 
 

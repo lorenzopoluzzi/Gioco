@@ -28,7 +28,7 @@ int main() {
 		input = getch();
 
 		system("cls");
-		livello l1(4);
+		l1.aggiornaMappa('1');
 		l1.stampaLivello();
 	}
 }

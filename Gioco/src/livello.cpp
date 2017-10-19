@@ -8,6 +8,7 @@
 
 #include "Livello.h"
 
+
 livello::livello(){
 	this->numLivello = -1;
 	this->numStanze = -1;
@@ -15,6 +16,7 @@ livello::livello(){
 	this->mostri = NULL;
 	this->numMostri = -1;
 }
+
 livello::livello(int numLivello){
 	this->numLivello = numLivello;
 	Lista<Stanza> * head = NULL;
@@ -108,6 +110,8 @@ void livello::collegamentiPorte(){
 						porte1[j].conect = true;
 						s.setPorte(porte1);
 						random.setPorte(porte2);
+						setElemetI(randomRoom,this->stanze,random);
+						setElemetI(i,this->stanze,s);
 						collegamento = true;
 					}else{
 						count++;
@@ -120,13 +124,94 @@ void livello::collegamentiPorte(){
 	}
 }
 
+bool livello::checkPos(int x, int y, bool flag){
+	char temp = this->mappa[y][x];
+	if(flag){
+		if (temp == '+' || temp == '#' ){
+			return false;
+		}else{
+			return true;
+		}
+	}else{
+		if (temp == '#' && temp == '\0' ){
+			return false;
+		}else{
+			return true;
+		}
+	}
 
+}
+
+bool livello::findPlayer(coordinate player, coordinate mobb, int vista,bool &sopra,bool &sotto,bool &destra,bool &sinistra){
+	int distanzaRigha = abs(mobb.x - player.x);
+	int distanzaCol = abs(mobb.y - player.y);
+	//righa controllo se è visibile
+	if(distanzaRigha <= vista){
+		//sinistra
+		if(abs(((mobb.x-1) - player.x) < distanzaRigha) && checkPos(mobb.x-1,mobb.y,false)){
+			sinistra = true;
+			return true;
+		}
+		//destra
+		else if(abs(((mobb.x+1) - player.x) < distanzaRigha) && checkPos(mobb.x+1,mobb.y,false)){
+			destra = true;
+			return true;
+		}
+	}
+	//colonna controllo se è visibile
+	else if(distanzaCol <= vista){
+		//sotto
+		if(abs(((mobb.y+1) - player.y) < distanzaCol) && checkPos(mobb.x,mobb.y+1,false)){
+			sotto = true;
+			return true;
+		}
+		//sopra
+		else if(abs(((mobb.y-1) - player.y) < distanzaCol) && checkPos(mobb.x,mobb.y-1,false)){
+			sopra = true;
+			return true;
+		}
+
+	}else{
+		return false;
+	}
+}
 
 void livello::setUpMappa(){
 	int x, y;
 	for (y = 0; y < 45; y++) {
 		for (x = 0; x < 135; x++) {
 			this->mappa[y][x] = '\0';
+		}
+	}
+}
+
+void livello::aggiornaMappa(char input){
+	//aggiornamento poszione dei mostri
+	int i;
+	int x,y;
+	int xmobb,ymobb;
+	bool sopra, sotto, destra, sinistra;
+	bool isActive;
+	coordinate coplayer;
+	coordinate comostro;
+
+	for(i = 0; i < this->numMostri; i++){
+		mostro mostro = getElemetI(i,this->mostri);
+		if(mostro.getVivo()){
+			comostro.x = mostro.getposx();
+			comostro.y = mostro.getposy();
+			mostro.cancellaMobb(this->mappa);
+			isActive = findPlayer(coplayer, comostro, mostro.getVista(),sopra,sotto,destra,sinistra);
+			if(!isActive){
+				sopra = checkPos(mostro.getposx(),mostro.getposy()-1,true);
+				sotto = checkPos(mostro.getposx(),mostro.getposy()+1,true);
+				destra = checkPos(mostro.getposx()+1,mostro.getposy(),true);
+				sinistra = checkPos(mostro.getposx()-1,mostro.getposy(),true);
+			}
+			mostro.movemobb(isActive, sopra, sotto, destra, sinistra);
+			setElemetI(i,this->mostri,mostro);
+			mostro.stampamobb(this->mappa);
+
 		}
 	}
 }
@@ -139,19 +224,18 @@ void livello::creazioneGiocatore(){
 }
 
 Lista<mostro> * livello::creazioneMostri(Lista<mostro> * testa){
-	int count;
 	int x,y;
-	int numstanza = 1;
+	int numstanza;
 	Stanza s;
-	for(count = 0; count < this->numStanze-1; count++){
-		if(rand()%2){
+	for(numstanza = 1; numstanza < this->numStanze; numstanza++){
+		if(numstanza<this->numLivello || rand()%2){
 			s = getElemetI(numstanza,this->stanze);
 			x = (rand() % (s.getLarghezza() - 2)) + s.getX() + 1;
 			y = (rand() % (s.getAltezza() - 2)) + s.getY() + 1;
 			mostro mostro(numLivello, x , y);
 			mostro.stampamobb(this->mappa);
 			testa = insertCoda(mostro,testa);
-			numstanza++;
+			this->numMostri++;
 		}
 	}
 	return testa;

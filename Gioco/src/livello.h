@@ -40,6 +40,7 @@ class livello{
 		void setUpMappa();
 		void creazioneGiocatore();
 		Lista<mostro> * creazioneMostri(Lista<mostro> * testa);
+		void aggiornaMappa(char input);
 
 	void getMappa(char mappa[ALTEZZA][LARGHEZZA]){
 		int i,j;
@@ -81,6 +82,10 @@ class livello{
 	void setStanze(Lista<Stanza> * stanze) {
 		this->stanze = stanze;
 	}
+
+	private:
+	bool checkPos(int x, int y, bool flag);
+	bool findPlayer(coordinate player, coordinate mobb, int vista,bool &sopra,bool &sotto,bool &destra,bool &sinistra);
 };
 
 int  aggiungiVicino(char mappa[ALTEZZA][LARGHEZZA], Lista<coordinate> * frontiere, coordinate vieneDa [ALTEZZA][LARGHEZZA], int x, int y, int count);

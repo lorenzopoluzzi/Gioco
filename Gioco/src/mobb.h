@@ -23,8 +23,11 @@ public:
     void setpos (int x, int y);
     int getposx ();
     int getposy ();
+    bool getVivo();
+    int getVista();
     void stampamobb (char mappa[][135]);
-    void movemobb (bool moodmobb);
+    void cancellaMobb( char mappa [45][135]);
+    void movemobb (bool moodmobb, bool sopra, bool sotto, bool destra, bool sinistra );
 
 private:
 
@@ -37,7 +40,7 @@ private:
 
     int atck ;
     int life ;
-
+    int vista;
     //posizione
 
     int x;
