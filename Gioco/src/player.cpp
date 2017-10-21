@@ -5,7 +5,7 @@
  *      Author: Omar Serrah
  */
 
-#include "player.h"
+#include "player.hpp"
 
 //inizializzo la posizione del giocatore a zero
 Player::Player() {
@@ -16,7 +16,7 @@ Player::Player() {
     _attacco = 20;
     _vita = 100;
     _gemma = 0;
-    }
+}
 
 //stampa a schermo
 void Player::stampaGiocatore (char mappa [45][135]){

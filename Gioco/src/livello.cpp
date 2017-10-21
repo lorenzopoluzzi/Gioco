@@ -6,7 +6,7 @@
  */
 
 
-#include "Livello.h"
+#include "Livello.hpp"
 
 
 livello::livello(){
@@ -15,6 +15,8 @@ livello::livello(){
 	this->stanze = NULL;
 	this->mostri = NULL;
 	this->numMostri = -1;
+	this->numOggetti = -1;
+	this->oggetti = NULL;
 }
 
 livello::livello(int numLivello){
@@ -27,6 +29,9 @@ livello::livello(int numLivello){
 	creazioneGiocatore();
 	Lista<mostro> * testa = NULL;
 	this->mostri = this->creazioneMostri(testa);
+	this->numOggetti = (this->numLivello/2) +1;
+	Lista<oggetto> * fronte = NULL;
+	this->oggetti = this->creazioneOggetti(fronte);
 }
 
 
@@ -67,24 +72,6 @@ void livello::collegamentiPorte(){
 	int randomRoom, randomDoor;
 	int count;
 	bool collegamento = false;
-	if(this->numStanze == 2){
-		Stanza s = getElemetI(0,this->stanze);
-		Stanza random = getElemetI(1,this->stanze);
-		porta porte1[4];
-		s.getPorte(porte1);
-		porta porte2[4];
-		random.getPorte(porte2);
-		coordinate start,end;
-		start.x = porte2[0].x;
-		start.y = porte2[0].y;
-		end.x = porte1[0].x;
-		end.y = porte1[0].y;
-		collegamenti(this->mappa, start, end);
-		porte2[0].conect = true;
-		porte1[0].conect = true;
-		s.setPorte(porte1);
-		random.setPorte(porte2);
-	}else{
 	for (i = 0; i < this->numStanze; i++){
 		Stanza s = getElemetI(i,this->stanze);
 		for (j = 0; j < s.getNumPorte() ; ++j) {
@@ -93,7 +80,7 @@ void livello::collegamentiPorte(){
 			if(!porte1[j].conect){
 				count = 0;
 				collegamento = false;
-				while(count < 2 && !collegamento){
+				while(!s.getConect() || (count < 3 && !collegamento)){
 					randomRoom = rand() % this->numStanze;
 					Stanza random = getElemetI(randomRoom,this->stanze);
 					randomDoor = rand() % random.getNumPorte();
@@ -106,10 +93,16 @@ void livello::collegamentiPorte(){
 						end.x = porte1[j].x;
 						end.y = porte1[j].y;
 						collegamenti(this->mappa, start, end);
-						porte2[randomDoor].conect = true;
-						porte1[j].conect = true;
+						if(random.getNumPorte() != 1){
+							porte2[randomDoor].conect = true;
+						}
+						if(s.getNumPorte() != 1){
+							porte1[j].conect = true;
+						}
 						s.setPorte(porte1);
 						random.setPorte(porte2);
+						s.setConect(true);
+						random.setConect(true);
 						setElemetI(randomRoom,this->stanze,random);
 						setElemetI(i,this->stanze,s);
 						collegamento = true;
@@ -120,20 +113,22 @@ void livello::collegamentiPorte(){
 			}
 		}
 
-		}
 	}
 }
 
 bool livello::checkPos(int x, int y, bool flag){
 	char temp = this->mappa[y][x];
+	//situazione statica o di creazione
 	if(flag){
-		if (temp == '+' || temp == '#' ){
+		if (temp != ' '){
 			return false;
 		}else{
 			return true;
 		}
-	}else{
-		if (temp == '#' && temp == '\0' ){
+	}
+	//situazione di movimento o inseguimento
+	else {
+		if (temp != ' ' || temp != '+'){
 			return false;
 		}else{
 			return true;
@@ -171,9 +166,9 @@ bool livello::findPlayer(coordinate player, coordinate mobb, int vista,bool &sop
 			return true;
 		}
 
-	}else{
-		return false;
 	}
+		return false;
+
 }
 
 void livello::setUpMappa(){
@@ -188,8 +183,6 @@ void livello::setUpMappa(){
 void livello::aggiornaMappa(char input){
 	//aggiornamento poszione dei mostri
 	int i;
-	int x,y;
-	int xmobb,ymobb;
 	bool sopra, sotto, destra, sinistra;
 	bool isActive;
 	coordinate coplayer;
@@ -228,7 +221,7 @@ Lista<mostro> * livello::creazioneMostri(Lista<mostro> * testa){
 	int numstanza;
 	Stanza s;
 	for(numstanza = 1; numstanza < this->numStanze; numstanza++){
-		if(numstanza<this->numLivello || rand()%2){
+		if(rand()%2){
 			s = getElemetI(numstanza,this->stanze);
 			x = (rand() % (s.getLarghezza() - 2)) + s.getX() + 1;
 			y = (rand() % (s.getAltezza() - 2)) + s.getY() + 1;
@@ -240,5 +233,28 @@ Lista<mostro> * livello::creazioneMostri(Lista<mostro> * testa){
 	}
 	return testa;
 
+}
+
+Lista<oggetto> * livello::creazioneOggetti(Lista<oggetto> * fronte){
+	int x,y;
+	int count;
+	int numstanza;
+	bool correct;
+	Stanza s;
+	for(count = 0; count < this->numOggetti; count++){
+		numstanza = rand()%this->numStanze;
+		s = getElemetI(numstanza,this->stanze);
+		x = (rand() % (s.getLarghezza() - 2)) + s.getX() + 1;
+		y = (rand() % (s.getAltezza() - 2)) + s.getY() + 1;
+		correct = this->checkPos(x,y,true);
+		if(correct){
+			oggetto oggetto(numLivello, x , y);
+			oggetto.stampaObject(this->mappa);
+			fronte = insertCoda(oggetto,fronte);
+		}else{
+			count--;
+		}
+	}
+	return fronte;
 }
 

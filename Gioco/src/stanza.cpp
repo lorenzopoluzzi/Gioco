@@ -5,7 +5,7 @@
  *      Author: turri
  */
 
-#include "Stanza.h"
+#include "stanza.hpp"
 
 
 Stanza::Stanza() {
@@ -14,6 +14,7 @@ Stanza::Stanza() {
 	this->altezza = -1;
 	this->larghezza = -1;
 	this->numPorte = -1;
+	this->conect = false;
 }
 Stanza::Stanza(int grid) {
 	// TODO Auto-generated constructor stub
@@ -89,7 +90,9 @@ Stanza::Stanza(int grid) {
 			}
 		}
 
-		}
+	}
+
+	this->conect = false;
 }
 
 void Stanza::stampaStanza(char  mappa[45][135]){

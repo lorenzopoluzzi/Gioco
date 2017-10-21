@@ -5,7 +5,7 @@
  *      Author: turri
  */
 
-#include "Livello.h"
+#include "livello.hpp"
 
 
 int aggiungiVicino(char  mappa[ALTEZZA][LARGHEZZA], Lista<coordinate> * frontiere, coordinate vieneDa [ALTEZZA][LARGHEZZA], int x, int y, int count){

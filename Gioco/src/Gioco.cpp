@@ -10,25 +10,27 @@
 #include <iostream>
 #include <cstdio>
 #include <conio.h>
-#include "Livello.h"
 #include <time.h>
+
+#include "livello.hpp"
 using namespace std;
 
 int main() {
-	char input;
-	srand(time(NULL));
+	string input;
+	srand(time(0));
+	int i = 0;
 
-
-	system("cls");
-	livello l1(4);
+	//system("cls");
+	livello l1(i);
 	l1.stampaLivello();
 
 	while(true)
 	{
 		input = getch();
-
+		i++;
 		system("cls");
-		l1.aggiornaMappa('1');
+		livello l1(i);
 		l1.stampaLivello();
+
 	}
 }

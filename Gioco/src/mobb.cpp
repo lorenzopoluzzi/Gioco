@@ -6,7 +6,7 @@
  */
 
 
-#include "mobb.h"
+#include "mobb.hpp"
 
 
 
@@ -18,6 +18,7 @@ mostro::mostro(){
 	this->vivo = false;
 	this->x = -1;
 	this->y = -1;
+	this->vista = -1;
 }
 
 mostro::mostro (int liv, int x, int y) {
@@ -148,6 +149,7 @@ void mostro::stampamobb (char mappa[45][135]) {
 
     }
 }
+
 void mostro::cancellaMobb( char mappa [45][135]){
 	mappa[y][x] = ' ';
 }
@@ -215,6 +217,22 @@ void mostro::movemobb (bool moodmobb, bool sopra, bool sotto, bool destra, bool 
     };
 
 
+}
+
+bool mostro::ricercamobb(int x, int y, int numMobb, Lista<mostro> * head, mostro * result){
+	int i;
+	int mobX, mobY;
+	for (i = 0; i < numMobb; i++) {
+		mostro mob1 = getElemetI(i, head);
+		mobX = mob1.getposx();
+		mobY = mob1.getposy();
+		if(x == mobX && y == mobY){
+			result = &mob1;
+			return true;
+		}
+	}
+
+	return false;
 }
 
 

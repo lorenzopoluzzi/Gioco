@@ -4,17 +4,7 @@
  *  Created on: 18 ott 2017
  *      Author: turri
  */
-#include <iostream>
-using namespace std;
-
-template <class T>
-struct Lista{
-		T value;
-		Lista<T> * next;
-};
-
-template <class T> Lista<T> * insertCoda(T value, Lista<T> * head);
-template <class T> T getElemetI(int i, Lista<T> * head);
+#include "lista.hpp"
 
 template <class T>
 Lista<T> * insertCoda(T value, Lista<T> * head){
@@ -86,7 +76,5 @@ void cancellaLista(Lista<T> * head){
 		delete(tmp);
 	}
 }
-
-
 
 
