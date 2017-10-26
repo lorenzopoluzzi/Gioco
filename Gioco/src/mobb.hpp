@@ -29,7 +29,7 @@ public:
     void stampamobb (char mappa[][135]);
     void cancellaMobb( char mappa [][135]);
     void movemobb (bool moodmobb, bool sopra, bool sotto, bool destra, bool sinistra, char mappa[45][135] );
-    bool ricercamobb(int x, int y, int numMobb, Lista<mostro> * head, mostro * result);
+    bool ricercamobb(int x, int y);
     bool dropGemma(int liv);
 
 protected:

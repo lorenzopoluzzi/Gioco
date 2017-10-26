@@ -365,7 +365,10 @@ int livello::aggiornaMappa(char input){
 	bool isActive;
 	bool flag = false;
 	bool find = false;
+	int atkpl;
+	this->giocatore.getAttacco(atkpl);
 	oggetto ogg;
+	mostro mob;
 	coordinate coplayer;
 	coordinate comostro;
 	if(input == 'l') {
@@ -387,6 +390,21 @@ int livello::aggiornaMappa(char input){
 			return this->scale[indice].liv;
 		}
 
+	}else if(input == 'j'){
+		for(j=0; (j < this->numMostri) && !find ; j++){
+			mob = getElemetI(j,this->mostri);
+			find = mob.ricercamobb(plx, ply);
+			if(find){
+				if(mob.setvita(atkpl)){
+					mob.cancellaMobb(this->mappa);
+					deleteI(j,this->mostri);
+				}else {
+					setElemetI(j,this->mostri,mob);
+					this->giocatore.vieniColpito(mob.getattacco());
+				}
+
+			}
+		}
 	}else {
 		this->giocatore.cancellaPlayer(this->mappa);
 		flag = this->giocatore.getMove(input, this->mappa);
