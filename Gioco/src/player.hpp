@@ -42,7 +42,10 @@ public:
     void getAttacco (int &attacco);
 
     //tu muovi
-    void getMove (char c);
+    bool getMove (char c, char mappa[45][135]);
+
+    //raccogli oggetto
+    void raccolgoOgg(int tipoggetto, int value);
 
     //vita iniziale
     void getVita(int &life);
@@ -53,14 +56,25 @@ public:
     //getters gemma
     void getGemma(int &gemma);
 
+    //cancella il player alla posizione
+    void cancellaPlayer( char mappa [45][135]);
+
+    //set vita player
+    void setVita(int value);
+
+    //set attacco
+    void setAttacco(int value);
+
+
 protected:
 
-    //propriet‡ del giocatore principale
+    //propriet√† del giocatore principale
     int _livello;
     int _esperienza;
     int _attacco;
     int _vita;
     int _gemma;
+    char _car;
 
     //posizione
     int _x;

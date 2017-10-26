@@ -16,17 +16,24 @@ Player::Player() {
     _attacco = 20;
     _vita = 100;
     _gemma = 0;
+    _car = ' ';
 }
 
 //stampa a schermo
 void Player::stampaGiocatore (char mappa [45][135]){
     mappa [_y][_x] = 'P';
 }
-// setta la vita del giocatore
+// ghetta la vita del giocatore
 void Player::getVita (int &life) {
     life = _vita;
 }
 
+void Player::setVita(int value){
+	this->_vita += value;
+	if(this->_vita > 100){
+		this->_vita = 100;
+	}
+}
 // setta la posizione del giocatore
 void Player::setPosizione (int x, int y) {
     _x = x;
@@ -45,15 +52,14 @@ void Player::getGemma(int &gemma) {
 
 //perdere vita
 void Player::vieniColpito(int attacco) {
-        _vita -= attacco;
-    }
+        this->_vita -= attacco;
+ }
 
 //esperienza
 void Player::addEsperienza (int esperienza) {
     _esperienza += esperienza;
     //Level UP
     while (_esperienza >= 100) {
-        printf("Level UP! \n");
          _esperienza -= 100;
          _attacco += 10;
          _vita = 100;
@@ -81,18 +87,81 @@ void Player::getPosizione (int &x, int &y) {
     y = _y;
 }
 
-//movimenti del player
-void Player::getMove (char c) {
-    if (c == 'w')
-        this->_y = this->_y-1;
-
-    if ( c == 's')
-        this->_y = this->_y+1;
-
-    if ( c == 'a')
-        this->_x = this->_x-1;
-
-    if ( c == 'd')
-        this->_y = this->_x+1;
+void Player::setAttacco(int value){
+	_attacco += value;
 }
 
+//movimenti del player
+bool Player::getMove (char c, char mappa[45][135]) {
+    if ( c == 'w') {
+    	if(_y-1 >= 0){
+    		if(mappa[_y-1][_x]==' ' || mappa[_y-1][_x]=='+') {
+    			this->_car = mappa[_y-1][_x];
+    			this->_y = this->_y-1;
+    			return true;
+    		} else {
+    			return false;
+    		}
+    	}else{
+    		return false;
+    	}
+	}
+    if ( c == 's') {
+    	if(_y+1 < 45){
+    		if(mappa[_y+1][_x]==' ' || mappa[_y+1][_x]=='+') {
+    			this->_car = mappa[_y+1][_x];
+    			this->_y = this->_y+1;
+    			return true;
+    		} else {
+    			return false;
+    		}
+    	}else{
+    		return false;
+    	}
+	}
+    if ( c == 'a') {
+    	if(_x-1 >=0){
+			if(mappa[_y][_x-1]==' ' || mappa[_y][_x-1]=='+') {
+				this->_car = mappa[_y][_x-1];
+				this->_x = this->_x-1;
+				return true;
+			} else {
+				return false;
+			}
+    	}else{
+    		return false;
+    	}
+	}
+    if ( c == 'd') {
+    	if(_x+1 < 135){
+    		if(mappa[_y][_x+1]==' ' || mappa[_y][_x+1]=='+') {
+    			this->_car = mappa[_y][_x+1];
+    			this->_x = this->_x+1;
+    			return true;
+    		} else {
+    			return false;
+    		}
+    	}else{
+    		return false;
+    	}
+    }
+    return false;
+}
+
+void Player::raccolgoOgg(int tipoggetto, int value){
+	if(tipoggetto == 0){
+		setVita(value);
+	}else if(tipoggetto == 1){
+		addEsperienza(value);
+	}else if(tipoggetto == 2){
+		vieniColpito(value);
+	}else if(tipoggetto == 3){
+		pickGemma();
+	}else if(tipoggetto == 4){
+		setAttacco(value);
+	}
+}
+
+void Player::cancellaPlayer( char mappa [45][135]){
+	mappa[_y][_x] = this->_car;
+}

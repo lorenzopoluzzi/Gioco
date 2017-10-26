@@ -13,6 +13,7 @@
 #include "player.hpp"
 #include "stanza.hpp"
 #include "oggetto.hpp"
+#include <cmath>
 
 int const ALTEZZA = 45;
 int const LARGHEZZA = 135;
@@ -21,7 +22,11 @@ struct coordinate{
 	int x;
 	int y;
 };
-
+struct scala{
+	int x;
+	int y;
+	int liv;
+};
 class livello{
 	protected:
 		char mappa[ALTEZZA][LARGHEZZA];
@@ -33,6 +38,7 @@ class livello{
 		Player giocatore;
 		Lista<mostro> * mostri;
 		Lista<oggetto> * oggetti;
+		scala scale[2];
 
 	public:
 		livello();
@@ -44,7 +50,10 @@ class livello{
 		void creazioneGiocatore();
 		Lista<mostro> * creazioneMostri(Lista<mostro> * testa);
 		Lista<oggetto> * creazioneOggetti(Lista<oggetto> * fronte);
-		void aggiornaMappa(char input);
+		int aggiornaMappa(char input);
+		void setPosGiocatore();
+		Player getPlayer();
+		void creazioneScale();
 
 	void getMappa(char mappa[ALTEZZA][LARGHEZZA]){
 		int i,j;
@@ -90,6 +99,7 @@ class livello{
 	private:
 	bool checkPos(int x, int y, bool flag);
 	bool findPlayer(coordinate player, coordinate mobb, int vista,bool &sopra,bool &sotto,bool &destra,bool &sinistra);
+	bool ricercaScale(int x,int y, int &indice);
 };
 
 int  aggiungiVicino(char mappa[ALTEZZA][LARGHEZZA], Lista<coordinate> * frontiere, coordinate vieneDa [ALTEZZA][LARGHEZZA], int x, int y, int count);

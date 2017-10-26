@@ -22,7 +22,7 @@ public:
 	oggetto(int liv, int x, int y);
     void stampaObject (char mappa[][135]);
     void cancellaObject( char mappa [][135]);
-    bool ricercaOgg(int x, int y, int numOggetti, Lista<oggetto> * head, oggetto * result);
+    bool ricercaOgg(int x, int y);
     int getX();
     int getY();
     int getValue();

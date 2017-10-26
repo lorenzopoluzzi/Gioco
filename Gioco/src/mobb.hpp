@@ -28,18 +28,20 @@ public:
     int getVista();
     void stampamobb (char mappa[][135]);
     void cancellaMobb( char mappa [][135]);
-    void movemobb (bool moodmobb, bool sopra, bool sotto, bool destra, bool sinistra );
+    void movemobb (bool moodmobb, bool sopra, bool sotto, bool destra, bool sinistra, char mappa[45][135] );
     bool ricercamobb(int x, int y, int numMobb, Lista<mostro> * head, mostro * result);
+    bool dropGemma(int liv);
 
 protected:
     bool vivo ;
 	int tipomobb;
 
-	//propriet‡ del mobb
+	//propriet√† del mobb
 
 	int atck ;
 	int life ;
 	int vista;
+	char car;
 	//posizione
 
 	int x;

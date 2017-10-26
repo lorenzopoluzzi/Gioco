@@ -109,5 +109,3 @@ void collegamenti(char  mappa[ALTEZZA][LARGHEZZA], coordinate start, coordinate 
 		 cancellaLista(frontiere);
 }
 
-
-

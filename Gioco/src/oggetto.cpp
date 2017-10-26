@@ -30,7 +30,7 @@ oggetto::oggetto(int liv, int x, int y){
 
 	}else if(this->tipooggetto == 2){
 
-		this->value = -20;
+		this->value = 20;
 
 	}else if(this->tipooggetto == 3){
 
@@ -53,20 +53,32 @@ void oggetto::cancellaObject(char mappa [45][135] ){
 	mappa [this->y][this->x] = ' ';
 }
 
-bool oggetto::ricercaOgg(int x, int y, int numOggetti, Lista<oggetto> * head, oggetto * result){
-	int i;
-	int obX, obY;
-	for (i = 0; i < numOggetti; i++) {
-		oggetto ob1 = getElemetI(i, head);
-		obX = ob1.getX();
-		obY = ob1.getY();
-		if(x == obX && y == obY){
-			result = &ob1;
-			return true;
+bool oggetto::ricercaOgg(int x, int y){
+	int i = 0;
+	int xpl,ypl;
+	bool result = false;
+	while(!result && i<4){
+		if(i == 0){
+			ypl = y;
+			xpl = x - 1;
+		}else if(i == 1){
+			ypl = y;
+			xpl = x + 1;
+		}else if(i == 2){
+			xpl = x;
+			ypl = y - 1;
+		}else if(i == 3){
+			xpl = x;
+			ypl = y + 1;
 		}
+		if(xpl == this->x && ypl == this->y){
+				result = true;
+		}
+		i++;
 	}
 
-	return false;
+	return result;
+
 }
 
 int oggetto::getValue(){
@@ -90,7 +102,7 @@ int oggetto::getY(){
  * 1- POZIONE aggiunge 10 Pt. esperienza al giocatore
  * 2- TRAPPOLA toglie 20 di vita al giocatore
  * 3- GEMMA aggiunge una gemma a raccolta del personaggio
- * 4- FORZA  aggiunge 5 Pt. all’attacco del giocatore permanentemente
+ * 4- FORZA  aggiunge 5 Pt. allâ€™attacco del giocatore permanentemente
  */
 int oggetto::randomobject(int liv){
 	int randomobject;

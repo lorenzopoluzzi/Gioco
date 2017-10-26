@@ -39,11 +39,11 @@ T getElemetI(int i, Lista<T> * head){
 		if(count == i){
 			return tmp->value;
 		}else{
-			cout<<"Non ci sono abbastanza elementi";
+			cout<<"Non ci sono abbastanza elementi (get)";
 
 		}
 	}else{
-		cout<<"La lista è vuota";
+		cout<<"La lista Ã¨ vuota";
 	}
 }
 
@@ -60,11 +60,11 @@ void setElemetI(int i, Lista<T> * head, T value){
 		if(count == i){
 			tmp->value = value;
 		}else{
-			cout<<"Non ci sono abbastanza elementi";
+			cout<<"Non ci sono abbastanza elementi (set)";
 
 		}
 	}else{
-		cout<<"La lista è vuota";
+		cout<<"La lista Ã¨ vuota";
 	}
 }
 template <class T>
@@ -77,4 +77,35 @@ void cancellaLista(Lista<T> * head){
 	}
 }
 
+template <class T>
+Lista<T> *  deleteI(int i, Lista<T> * head){
+	Lista<T> * tmp;
+	Lista<T> * prov;
+	int count=0;
+	if(head != NULL){
+		if(head->next !=NULL){
+			tmp = head;
+			while(tmp->next->next != NULL && count < i-1){
+				tmp = tmp->next;
+				count++;
+			}
+			if(count == i-1 || count == 0){
+				if(i == 0){
+					head = tmp->next;
+					delete(tmp) ;
+				}else{
+					prov = tmp->next;
+					tmp->next = tmp->next->next;
+					delete(prov);
+				}
+			}
+		}else{
+			if(count == i){
+				delete (head) ;
+				head = NULL;
+			}
+		}
+	}
+	return head;
+}
 
