@@ -19,6 +19,7 @@ mostro::mostro(){
 	this->x = -1;
 	this->y = -1;
 	this->vista = -1;
+	this->car = ' ';
 }
 
 mostro::mostro (int liv, int x, int y) {
@@ -50,8 +51,9 @@ mostro::mostro (int liv, int x, int y) {
 
         }
 
-        this->vivo = true;          //se true è vivo
+        this->vivo = true;          //se true Ã¨ vivo
 
+        this->car = ' ';
         this->x = x;
         this->y = y;
 
@@ -63,10 +65,10 @@ int mostro::randomobb (int liv) {
 
         if (liv<3){
 
-            randomobb=(rand()%2);      //è 0 o 1 perchè resto divisione per 2
+            randomobb=(rand()%2);      //Ã¨ 0 o 1 perchÃ¨ resto divisione per 2
         }
 
-        else if (3<= liv <7) {
+        else if (liv >= 3 && liv < 7) {
 
 
             randomobb=(rand()%2)+1;
@@ -151,30 +153,34 @@ void mostro::stampamobb (char mappa[45][135]) {
 }
 
 void mostro::cancellaMobb( char mappa [45][135]){
-	mappa[y][x] = ' ';
+	mappa[y][x] = this->car;
 }
 
-void mostro::movemobb (bool moodmobb, bool sopra, bool sotto, bool destra, bool sinistra )  {
+void mostro::movemobb (bool moodmobb, bool sopra, bool sotto, bool destra, bool sinistra, char mappa[45][135] )  {
 	int x,y;
 	//activemobb move si muove segue il player
     if (moodmobb == true ) {
     	if(sopra){
+    		this->car = mappa[this->y][this->x];
     		x = this->x;
-			y = this->y-1;
-			this->setpos(x,y);
+    		y = this->y-1;
+    		this->setpos(x,y);
 
     	}else if(sotto){
+    		this->car = mappa[this->y][this->x];
     		x = this->x;
-			y = this->y+1;
-			this->setpos(x,y);
+    		y = this->y+1;
+    		this->setpos(x,y);
     	}else if(destra){
+    		this->car = mappa[this->y][this->x];
     		x = this->x+1;
-			y = this->y;
-			this->setpos(x,y);
+    		y = this->y;
+    		this->setpos(x,y);
     	}else if(sinistra){
+    		this->car = mappa[this->y][this->x];
     		x = this->x-1;
-			y = this->y;
-			this->setpos(x,y);
+    		y = this->y;
+    		this->setpos(x,y);
     	}
 
     }
@@ -186,6 +192,7 @@ void mostro::movemobb (bool moodmobb, bool sopra, bool sotto, bool destra, bool 
     		random = rand()%4;
     		//move top
     		if(random == 0 && sopra){
+    			this->car = mappa[this->y][this->x];
     			x = this->x;
     			y = this->y-1;
     			this->setpos(x,y);
@@ -193,6 +200,7 @@ void mostro::movemobb (bool moodmobb, bool sopra, bool sotto, bool destra, bool 
     		}
     		//move bottom
     		else if(random == 1 && sotto){
+    			this->car = mappa[this->y][this->x];
     			x = this->x;
 				y = this->y+1;
 				this->setpos(x,y);
@@ -200,6 +208,7 @@ void mostro::movemobb (bool moodmobb, bool sopra, bool sotto, bool destra, bool 
     		}
     		//move right
     		else if(random == 2 && destra){
+    			this->car = mappa[this->y][this->x];
     			x = this->x+1;
 				y = this->y;
 				this->setpos(x,y);
@@ -207,6 +216,7 @@ void mostro::movemobb (bool moodmobb, bool sopra, bool sotto, bool destra, bool 
     		}
     		//move left
     		else if(random == 3 && sinistra){
+    			this->car = mappa[this->y][this->x];
     			x = this->x-1;
 				y = this->y;
 				this->setpos(x,y);
@@ -235,5 +245,11 @@ bool mostro::ricercamobb(int x, int y, int numMobb, Lista<mostro> * head, mostro
 	return false;
 }
 
-
-
+bool mostro::dropGemma(int liv){
+	bool drop = false;
+	int random = rand()%10 + liv/2;
+	if(random >=6){
+		drop = true;
+	}
+	return drop;
+}
