@@ -51,7 +51,7 @@ mostro::mostro (int liv, int x, int y) {
 
         }
 
-        this->vivo = true;          //se true Ã¨ vivo
+        this->vivo = true;          //se true è vivo
 
         this->car = ' ';
         this->x = x;
@@ -65,7 +65,7 @@ int mostro::randomobb (int liv) {
 
         if (liv<3){
 
-            randomobb=(rand()%2);      //Ã¨ 0 o 1 perchÃ¨ resto divisione per 2
+            randomobb=(rand()%2);      //è 0 o 1 perchè resto divisione per 2
         }
 
         else if (liv >= 3 && liv < 7) {
@@ -229,7 +229,7 @@ void mostro::movemobb (bool moodmobb, bool sopra, bool sotto, bool destra, bool 
     		}
     	}
 
-    };
+    }
 
 
 }
@@ -264,7 +264,7 @@ bool mostro::ricercamobb(int x, int y){
 bool mostro::dropGemma(int liv){
 	bool drop = false;
 	int random = rand()%10 + liv/2;
-	if(random >=6){
+	if(random >=7){
 		drop = true;
 	}
 	return drop;

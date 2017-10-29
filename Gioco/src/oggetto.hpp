@@ -9,7 +9,6 @@
 #define OGGETTO_HPP_
 
 #include <iostream>
-#include "lista.cpp"
 using namespace std;
 
 

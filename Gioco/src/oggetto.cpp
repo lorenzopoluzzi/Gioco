@@ -102,7 +102,7 @@ int oggetto::getY(){
  * 1- POZIONE aggiunge 10 Pt. esperienza al giocatore
  * 2- TRAPPOLA toglie 20 di vita al giocatore
  * 3- GEMMA aggiunge una gemma a raccolta del personaggio
- * 4- FORZA  aggiunge 5 Pt. allâ€™attacco del giocatore permanentemente
+ * 4- FORZA  aggiunge 5 Pt. all’attacco del giocatore permanentemente
  */
 int oggetto::randomobject(int liv){
 	int randomobject;

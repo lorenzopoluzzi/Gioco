@@ -28,11 +28,15 @@ void Player::getVita (int &life) {
     life = _vita;
 }
 
-void Player::setVita(int value){
+void Player::addVita(int value){
 	this->_vita += value;
 	if(this->_vita > 100){
 		this->_vita = 100;
 	}
+}
+
+void Player::setVita(int hp){
+	this->_vita = hp;
 }
 // setta la posizione del giocatore
 void Player::setPosizione (int x, int y) {
@@ -49,7 +53,10 @@ void Player::pickGemma (){
 void Player::getGemma(int &gemma) {
     gemma = _gemma;
 }
-
+//setters gemma
+void Player::setGemme(int gem){
+	this->_gemma = gem;
+}
 //perdere vita
 void Player::vieniColpito(int attacco) {
         this->_vita -= attacco;
@@ -76,21 +83,30 @@ void Player::getAttacco(int &attacco) {
 void Player::getEsperienza(int &esperienza) {
     esperienza = _esperienza;
 }
-//esperienza
+void Player::setExp(int exp){
+	this->_esperienza = exp;
+}
+//livello
 void Player::getLivello(int &livello) {
     livello = _livello;
 }
 
+void Player::setLivello(int liv){
+	this->_livello = liv;
+}
 //prende la posizione usando variabili
 void Player::getPosizione (int &x, int &y) {
     x = _x;
     y = _y;
 }
 
-void Player::setAttacco(int value){
+void Player::addAttacco(int value){
 	_attacco += value;
 }
 
+void Player::setAttacco(int value){
+	this->_attacco = value;
+}
 //movimenti del player
 bool Player::getMove (char c, char mappa[45][135]) {
     if ( c == 'w') {
@@ -150,7 +166,7 @@ bool Player::getMove (char c, char mappa[45][135]) {
 
 void Player::raccolgoOgg(int tipoggetto, int value){
 	if(tipoggetto == 0){
-		setVita(value);
+		addVita(value);
 	}else if(tipoggetto == 1){
 		addEsperienza(value);
 	}else if(tipoggetto == 2){
@@ -158,7 +174,7 @@ void Player::raccolgoOgg(int tipoggetto, int value){
 	}else if(tipoggetto == 3){
 		pickGemma();
 	}else if(tipoggetto == 4){
-		setAttacco(value);
+		addAttacco(value);
 	}
 }
 

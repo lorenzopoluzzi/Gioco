@@ -59,16 +59,30 @@ public:
     //cancella il player alla posizione
     void cancellaPlayer( char mappa [45][135]);
 
-    //set vita player
-    void setVita(int value);
+    //add vita player
+    void addVita(int value);
+
+    //set vita
+    void setVita(int hp);
+
+    //add attacco
+    void addAttacco(int value);
 
     //set attacco
     void setAttacco(int value);
 
+    //set livello
+    void setLivello(int liv);
+
+    //set esperienza
+    void setExp(int exp);
+
+    //set gemme
+    void setGemme(int gem);
 
 protected:
 
-    //propriet√† del giocatore principale
+    //propriet‡ del giocatore principale
     int _livello;
     int _esperienza;
     int _attacco;

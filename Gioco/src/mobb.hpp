@@ -9,7 +9,6 @@
 #define MOBB_HPP_
 
 #include <iostream>
-#include "lista.hpp"
 using namespace std;
 
 class mostro {
@@ -36,7 +35,7 @@ protected:
     bool vivo ;
 	int tipomobb;
 
-	//propriet√† del mobb
+	//propriet‡ del mobb
 
 	int atck ;
 	int life ;
